@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import {useHistory} from 'react-router-dom';
 import ShopContext from '../../contexts/ShopContext';
+import noImg from '../../img/noImage.jpg';
 
 export default function ProductInfo(props) {
     const {item} = props;
@@ -10,6 +11,7 @@ export default function ProductInfo(props) {
     const [count, setCount] = useState(1);    
     const history = useHistory();
     const {addToCart} = useContext(ShopContext);
+    const [isImgNotFound, setImgNotFound] = useState(false);
 
     useEffect(() => {
         let data = item.sizes.filter(el => el.avalible);
@@ -47,12 +49,16 @@ export default function ProductInfo(props) {
         history.push('/cart');
     }
 
+    const imgErrorHandler = () => {
+        setImgNotFound(true);
+    }
+
     return (
         <section className="catalog-item">
             <h2 className="text-center">{item.title}</h2>
             <div className="row">
                 <div className="col-5">
-                    <img src={item.images[0]}
+                    <img src={isImgNotFound ? noImg : item.images[0]} onError={imgErrorHandler}
                         className="img-fluid" alt="" />
                 </div>
                 <div className="col-7">

@@ -31,7 +31,7 @@ export default function Order() {
             },
             "items": products
         }
-        return data;
+        return JSON.stringify(data);
     }
 
     const fetchOrder = async () => {
@@ -64,6 +64,7 @@ export default function Order() {
             setIsMessage(false);
             setIsLoading(true);
             fetchOrder();
+            window.alert("Заказ успешно оформлен!");
         } else {
             setIsMessage(true);
         }
@@ -92,6 +93,7 @@ export default function Order() {
                         <label className="form-check-label" htmlFor="agreement">Согласен с правилами доставки</label>
                     </div>
                     <button type="submit" className="btn btn-outline-secondary">Оформить</button>
+                    
                     {isMessage ? <p>Некорректно заполнены поля</p> : null}
                     {isError ? <p>Ошибка при оформлении заказа.</p> : null}
                 </form>
